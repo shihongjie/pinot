@@ -430,7 +430,7 @@ public class PinotSegmentUploadRestletResource {
           "Failed to get segment fetcher for download URI: " + downloadURI, Response.Status.BAD_REQUEST);
     }
     // Download segment tar file to local
-    segmentFetcher.fetchSegmentToLocal(downloadURI, tempTarredSegmentFile);
+    segmentFetcher.fetchSegmentToLocal(new URI(downloadURI), tempTarredSegmentFile);
   }
 
   private FileUploadDownloadClient.FileUploadType getUploadType(String uploadTypeStr) {

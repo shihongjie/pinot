@@ -15,22 +15,37 @@
  */
 package com.linkedin.pinot.common.segment.fetcher;
 
+import com.linkedin.pinot.filesystem.PinotFS;
+import com.linkedin.pinot.filesystem.PinotFSFactory;
+import java.io.File;
+import java.net.URI;
+import java.util.Collections;
 import java.util.Set;
 import org.apache.commons.configuration.Configuration;
 
-import java.io.File;
 
+public class SegmentFetcher {
+  private PinotFS _pinotFS;
 
-public interface SegmentFetcher {
+  public void init(Configuration config) {
+    _pinotFS.init(config);
+  }
 
-  void init(Configuration configs);
+  public SegmentFetcher(Configuration config, URI uri) throws Exception {
+    PinotFSFactory factory = new PinotFSFactory(config);
+    _pinotFS = factory.create(uri);
+  }
 
-  void fetchSegmentToLocal(String uri, File tempFile) throws Exception;
+  public void fetchSegmentToLocal(URI uri, File tempFile) throws Exception {
+    _pinotFS.copyToLocalFile(uri, tempFile.toURI());
+  }
 
   /**
    * Returns a list of config keys whose value should not be logged.
    *
    * @return List of protected config keys
    */
-  Set<String> getProtectedConfigKeys();
+  public Set<String> getProtectedConfigKeys() {
+    return Collections.emptySet();
+  }
 }
