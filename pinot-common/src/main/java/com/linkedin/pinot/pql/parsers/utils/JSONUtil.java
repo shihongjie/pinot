@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -200,11 +199,6 @@ public class JSONUtil {
     @Override
     public Iterator keys() {
       return _inner.keySet().iterator();
-    }
-
-    @Override
-    public Iterator sortedKeys() {
-      return new TreeSet(_inner.keySet()).iterator();
     }
 
     /**
